@@ -1,4 +1,4 @@
-target/
+java-framework-demo/target/
 .idea/
 *.iml
 .DS_Store
