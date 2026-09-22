@@ -151,6 +151,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductBrief toBrief(ProductPo product) {
         ProductBrief brief = new ProductBrief();
         BeanUtils.copyProperties(product, brief);
+        brief.setProductStatus(product.getStatus());
         return brief;
     }
 }

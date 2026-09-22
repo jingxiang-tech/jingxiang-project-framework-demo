@@ -30,7 +30,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    sku,
                    name,
                    price,
-                   status,
+                   status AS product_status,
                    created_at
               FROM product
              WHERE deleted = 0
@@ -56,7 +56,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    sku,
                    name,
                    price,
-                   status,
+                   status AS product_status,
                    created_at,
                    updated_at
               FROM product
