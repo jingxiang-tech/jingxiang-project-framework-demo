@@ -32,7 +32,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    price,
                    status,
                    created_at
-              FROM demo_product
+              FROM product
              WHERE deleted = 0
                AND mct_no = #{query.mctNo}
                <if test="query.name != null and query.name != ''">
@@ -61,7 +61,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    status,
                    created_at,
                    updated_at
-              FROM demo_product
+              FROM product
              WHERE deleted = 0
                AND mct_no = #{mctNo}
                AND id = #{id}
@@ -75,7 +75,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
      * @return 影响行数
      */
     @Update("""
-            UPDATE demo_product
+            UPDATE product
                SET name = #{name},
                    price = #{price},
                    status = #{status},
@@ -94,9 +94,9 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
      * @return 影响行数
      */
     @Update("""
-            UPDATE demo_product
+            UPDATE product
                SET deleted = 1,
-                   updated_at = CURRENT_TIMESTAMP
+                   updated_at = NOW()
              WHERE deleted = 0
                AND mct_no = #{mctNo}
                AND id = #{id}

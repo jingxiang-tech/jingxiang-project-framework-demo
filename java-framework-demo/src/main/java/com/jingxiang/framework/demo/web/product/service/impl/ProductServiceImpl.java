@@ -14,6 +14,7 @@ import com.jingxiang.framework.demo.web.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,7 +87,10 @@ public class ProductServiceImpl implements ProductService {
         product.setUpdatedAt(now);
         try {
             productMapper.insert(product);
-        } catch (DuplicateKeyException exception) {
+        } catch (DataAccessException exception) {
+            if (!isDuplicateSku(exception)) {
+                throw exception;
+            }
             log.warn("商品编码已存在, sku={}", create.getSku());
             return R.fail("商品编码已存在");
         }
@@ -134,6 +138,21 @@ public class ProductServiceImpl implements ProductService {
             return R.fail("商品不存在");
         }
         return R.ok("删除成功");
+    }
+
+    /**
+     * MySQL 唯一约束会被 Spring 译成 {@link DuplicateKeyException}，MyBatis 可能再包一层。
+     *
+     * @param exception 写入失败异常
+     * @return 是否为商品编码重复
+     */
+    private boolean isDuplicateSku(Throwable exception) {
+        for (Throwable current = exception; current != null; current = current.getCause()) {
+            if (current instanceof DuplicateKeyException) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private ProductBrief toBrief(ProductPo product) {

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("demo_product")
+@TableName("product")
 public class ProductPo {
 
     /** 商品 ID */

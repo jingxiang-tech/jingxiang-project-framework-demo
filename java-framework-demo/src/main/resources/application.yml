@@ -15,10 +15,10 @@ spring:
       # @DictSerialize 基于 Jackson 2，不能切到 Boot 4 默认的 Jackson 3。
       preferred-json-mapper: jackson2
   datasource:
-    # 教学库，重启清空。正式环境换成 MySQL，保留 context-path 与 pagehelper。
-    url: jdbc:h2:mem:framework_demo;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
-    username: sa
-    password: ""
+    # 本机 MySQL。库不存在时驱动会创建，表结构由 schema.sql 初始化。
+    url: jdbc:mysql://127.0.0.1:3306/framework_demo?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: root
   sql:
     init:
       mode: always

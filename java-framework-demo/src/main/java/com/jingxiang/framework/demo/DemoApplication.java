@@ -11,8 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication {
 
     /**
-     * 启动应用。
-     *
      * @param args 启动参数
      */
     static void main(String[] args) {
