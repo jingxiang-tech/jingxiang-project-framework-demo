@@ -1,0 +1,41 @@
+server:
+  address: 127.0.0.1
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: jingxiang-project-framework-demo
+  jackson2:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  http:
+    converters:
+      # @DictSerialize 基于 Jackson 2，不能切到 Boot 4 默认的 Jackson 3。
+      preferred-json-mapper: jackson2
+  datasource:
+    # 教学库，重启清空。正式环境换成 MySQL，保留 context-path 与 pagehelper。
+    url: jdbc:h2:mem:framework_demo;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password: ""
+  sql:
+    init:
+      mode: always
+
+mybatis-plus:
+  mapper-locations: classpath*:com/jingxiang/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+
+jingxiang:
+  component:
+    common:
+      dict:
+        path:
+          - com.jingxiang.framework.demo

@@ -1,0 +1,104 @@
+---
+description: 通用前端规范：组件、样式、路由、API 封装、列表交互、错误与加载态。编辑 JS/TS/Vue/CSS 或前端目录时启用。
+globs: "**/*.{js,jsx,ts,tsx,vue,css,scss,less}"
+alwaysApply: false
+---
+
+你是前端开发助手。先遵循**当前仓库已有技术栈与文件风格**，再套用本规范。禁止为了“更现代”而引入第二套框架、UI 库或状态管理。
+
+## 1. 代码风格
+
+1. **缩进**：禁止 Tab。JS/TS/React 默认 **2 空格**；Vue 后台项目默认 **4 空格**。改已有文件时与该文件保持一致。
+2. **引号 / 分号**：与当前文件一致；无既有风格时 JS 用双引号且语句加分号。
+3. **行宽**：不超过 120 字符。
+4. **注释**：业务逻辑用中文；API / 组件名等技术标识可用英文。
+5. **最小改动**：只改需求相关代码，禁止无关格式化与大范围重构。
+
+## 2. 组件
+
+- 使用项目已有写法：**React 只用函数组件 + Hooks**；**Vue 3 只用 Options API**（`data/computed/watch/methods`），禁止 `<script setup>` / Composition API（除非仓库已经在用）。
+- 禁止 Class 组件（React）以及把 Vue 项目改成 React（或相反）。
+- Props 解构接收；列表必须有稳定 `key`。
+- 条件渲染用三目或 `&&`；不要为了性能提前上 `memo` / `useMemo` / `useCallback`。
+- `useEffect` / 定时器 / 事件监听 / IPC 订阅必须在卸载时清理。
+
+```jsx
+// ❌ BAD：组件内直接请求且不处理失败
+useEffect(() => {
+  axios.get("/api/student").then((res) => setList(res.data));
+}, []);
+
+// ✅ GOOD：走封装 API，loading 在 finally 关闭
+async function loadList() {
+  this.listLoading = true;
+  try {
+    const res = await fetchStudentPage(this.query);
+    if (res.status === 200) {
+      this.list = res.data;
+    }
+  } catch (e) {
+    this.$message.error("加载失败");
+  } finally {
+    this.listLoading = false;
+  }
+}
+```
+
+## 3. UI 与样式
+
+- 只用项目已有组件库（Ant Design / Element Plus 等），禁止再引入另一套。
+- 表单走组件库 Form + 校验规则；二次确认用 `Modal.confirm` / `$confirm`。
+- 轻提示：`message.success/error` 或项目已有 toast；不要 `alert`。
+- 样式：优先组件库 token / 已有全局变量。简单页用全局 CSS，复杂布局用 CSS Modules / scoped。
+- 类名 kebab-case 或 BEM；不要行内堆积大段样式。
+
+## 4. 路由
+
+- 使用项目已有路由模式（Hash / History），不要擅自更换。
+- 路径、菜单 key、页面容器映射放在同一处维护；新增页面必须同时改：路由表、菜单、页面入口。
+- 未知路径回落到默认页或 404（与现网一致）。
+
+## 5. API 请求
+
+- 业务接口只放 `src/api/**`（或仓库等价目录），统一走已封装的 axios 实例。
+- **禁止**在页面里 `axios.create` 或散落 `fetch`。
+- 成功以后端 `R` 为准：优先 `status === 200`（或项目统一的 `unwrapR`）。
+- JWT 由拦截器加 `Authorization: Bearer`；401 清 token 并跳转登录。
+- 数组 query 用重复键（`k=v1&k=v2`），兼容 Spring `List`。
+- 调用必须 `try/catch` 或 `.catch()`，并关闭 loading。
+
+```javascript
+import request from "@/api/axios"; // 或项目内 http.js
+
+export function fetchStudentPage(params) {
+  return request.get("/student", { params });
+}
+```
+
+## 6. 列表页
+
+- 必须有 loading，请求结束（成功或失败）都要关掉。
+- 筛选输入框：回车触发查询（Vue 3 用 `@keyup.enter`，禁止 `.native`）。
+- `Select` / 日期 / 字典筛选项：`change` 即查。
+- 分页字段与后端一致：`pageNum`（从 0 或 1，以当前接口为准）、`pageSize`、`total`。
+- 空数据、失败提示要可见，不要静默空白。
+
+## 7. 禁止事项
+
+1. ❌ 绕过 `api/` 封装直接 new axios
+2. ❌ 只写成功分支、不处理失败 / loading
+3. ❌ 列表筛选不能回车或 change 触发
+4. ❌ 提交构建产物、`node_modules`、环境密钥
+5. ❌ 渲染进程直接用 Node API（若存在 Electron：必须走 preload + service 封装，并提供非 Electron mock）
+
+## 8. 自检
+
+1. 是否沿用本仓库框架（React Hooks / Vue Options），而未混入另一套？
+2. 接口是否走 `api/` 且处理了失败与 loading？
+3. 列表筛选是否回车 / change 可查？
+4. 新路由是否同步了菜单与入口？
+5. 是否只有需求相关的最小 diff？
+
+## 优先级
+
+**用户明确要求 > 本文件 > 当前文件既有风格**
