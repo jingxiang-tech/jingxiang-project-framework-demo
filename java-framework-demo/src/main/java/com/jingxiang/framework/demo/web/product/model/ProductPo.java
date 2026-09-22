@@ -27,9 +27,6 @@ public class ProductPo {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 商户号 */
-    private String mctNo;
-
     /** 商品编码 */
     private String sku;
 

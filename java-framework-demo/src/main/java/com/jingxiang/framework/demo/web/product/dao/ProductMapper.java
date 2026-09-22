@@ -21,7 +21,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
     /**
      * 分页查询商品。调用前需 PageUtil.startPage。
      *
-     * @param query 查询条件，必须带商户号
+     * @param query 查询条件
      * @return 当前页数据
      */
     @Select("""
@@ -34,7 +34,6 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    created_at
               FROM product
              WHERE deleted = 0
-               AND mct_no = #{query.mctNo}
                <if test="query.name != null and query.name != ''">
                AND name LIKE CONCAT('%', #{query.name}, '%')
                </if>
@@ -50,7 +49,6 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
      * 查询商品详情。
      *
      * @param id 商品 ID
-     * @param mctNo 商户号
      * @return 详情，不存在时返回 null
      */
     @Select("""
@@ -63,15 +61,14 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    updated_at
               FROM product
              WHERE deleted = 0
-               AND mct_no = #{mctNo}
                AND id = #{id}
             """)
-    ProductDetail detail(@Param("id") Long id, @Param("mctNo") String mctNo);
+    ProductDetail detail(@Param("id") Long id);
 
     /**
-     * 按商户修改商品。商品编码不在此更新。
+     * 修改未删除的商品。商品编码不在此更新。
      *
-     * @param product 待更新字段，必须带 id 与 mctNo
+     * @param product 待更新字段，必须带 id
      * @return 影响行数
      */
     @Update("""
@@ -81,16 +78,14 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                    status = #{status},
                    updated_at = #{updatedAt}
              WHERE deleted = 0
-               AND mct_no = #{mctNo}
                AND id = #{id}
             """)
-    int updateByMct(ProductPo product);
+    int updateActive(ProductPo product);
 
     /**
      * 逻辑删除商品。
      *
      * @param id 商品 ID
-     * @param mctNo 商户号
      * @return 影响行数
      */
     @Update("""
@@ -98,8 +93,7 @@ public interface ProductMapper extends BaseMapper<ProductPo> {
                SET deleted = 1,
                    updated_at = NOW()
              WHERE deleted = 0
-               AND mct_no = #{mctNo}
                AND id = #{id}
             """)
-    int logicDelete(@Param("id") Long id, @Param("mctNo") String mctNo);
+    int logicDelete(@Param("id") Long id);
 }

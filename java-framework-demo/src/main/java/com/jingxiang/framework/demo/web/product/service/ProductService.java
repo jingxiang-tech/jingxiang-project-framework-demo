@@ -14,9 +14,9 @@ import com.jingxiang.framework.demo.web.product.model.ProductUpdate;
 public interface ProductService {
 
     /**
-     * 分页查询当前商户的商品。
+     * 分页查询商品。
      *
-     * @param query 分页与筛选条件，商户号由服务端写入
+     * @param query 分页与筛选条件
      * @return 分页列表
      */
     R<Page<ProductBrief>> list(ProductQuery query);

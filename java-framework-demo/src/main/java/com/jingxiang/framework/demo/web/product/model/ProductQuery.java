@@ -12,9 +12,6 @@ import lombok.Setter;
 @Setter
 public class ProductQuery extends BasePage {
 
-    /** 商户号，服务端写入 */
-    private String mctNo;
-
     /** 商品名称，模糊匹配 */
     private String name;
 

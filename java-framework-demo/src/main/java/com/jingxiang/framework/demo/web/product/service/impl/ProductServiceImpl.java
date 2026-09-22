@@ -23,8 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 商品用例实现。查询与写入都带商户号，避免越权。
- * 教学环境没有登录态，商户号固定为 DEMO；正式项目改为 SessionUtil.getTenantCode()。
+ * 商品用例实现。
  */
 @Slf4j
 @Service
@@ -34,13 +33,10 @@ public class ProductServiceImpl implements ProductService {
     /** 未删除 */
     private static final int NOT_DELETED = 0;
 
-    /** 教学环境固定商户号 */
-    private static final String DEMO_MCT_NO = "DEMO";
-
     private final ProductMapper productMapper;
 
     /**
-     * 分页查询当前商户的商品。
+     * 分页查询商品。
      *
      * @param query 分页与筛选条件
      * @return 分页列表
@@ -48,7 +44,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @SuppressWarnings("unchecked")
     public R<Page<ProductBrief>> list(ProductQuery query) {
-        query.setMctNo(DEMO_MCT_NO);
         PageUtil.startPage(query);
         List<ProductBrief> list = productMapper.list(query);
         return R.page(list);
@@ -62,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public R<ProductDetail> detail(Long id) {
-        ProductDetail detail = productMapper.detail(id, DEMO_MCT_NO);
+        ProductDetail detail = productMapper.detail(id);
         if (detail == null) {
             return R.fail("商品不存在");
         }
@@ -81,7 +76,6 @@ public class ProductServiceImpl implements ProductService {
         LocalDateTime now = LocalDateTime.now();
         ProductPo product = new ProductPo();
         BeanUtils.copyProperties(create, product);
-        product.setMctNo(DEMO_MCT_NO);
         product.setDeleted(NOT_DELETED);
         product.setCreatedAt(now);
         product.setUpdatedAt(now);
@@ -108,15 +102,14 @@ public class ProductServiceImpl implements ProductService {
     public R<ProductBrief> update(ProductUpdate update) {
         ProductPo product = new ProductPo();
         product.setId(update.getId());
-        product.setMctNo(DEMO_MCT_NO);
         product.setName(update.getName());
         product.setPrice(update.getPrice());
         product.setStatus(update.getStatus());
         product.setUpdatedAt(LocalDateTime.now());
-        if (productMapper.updateByMct(product) == 0) {
+        if (productMapper.updateActive(product) == 0) {
             return R.fail("商品不存在");
         }
-        ProductDetail detail = productMapper.detail(update.getId(), DEMO_MCT_NO);
+        ProductDetail detail = productMapper.detail(update.getId());
         if (detail == null) {
             return R.fail("商品不存在");
         }
@@ -134,7 +127,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public R<String> delete(Long id) {
-        if (productMapper.logicDelete(id, DEMO_MCT_NO) == 0) {
+        if (productMapper.logicDelete(id) == 0) {
             return R.fail("商品不存在");
         }
         return R.ok("删除成功");
