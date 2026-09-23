@@ -40,7 +40,7 @@ public class StudentChangePo {
     /** 说明 */
     private String remark;
 
-    /** 是否删除：Whether.No 否，Whether.Yes 是 */
+    /** 是否删除*/
     private Integer deleted;
 
     /** 创建时间 */

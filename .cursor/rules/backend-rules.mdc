@@ -47,7 +47,7 @@ web/{domain}/
 
 - 是否、有无用 `com.jingxiang.commons.model.dict.Whether`：`Whether.No` 否，`Whether.Yes` 是。不要自定义 `NOT_DELETED = 0` 这类常量。
 - 4 个空格，禁止 Tab；行宽 120；K&R 大括号；if/for/while 必须有 `{}`。
-- 类、方法写 Javadoc；字段 `/** 中文说明 */`。
+- 类写中文名称注释。每个字段都写 `/** 中文说明 */`，Brief、Detail、Po、Create、Update、Query 一样。枚举每个常量也写中文注释。
 - 禁止拼音、禁止接口名加 `I` 前缀、禁止魔法值；`long` 用 `1000L`。
 
 ## 4. 依赖注入与 Java 25
