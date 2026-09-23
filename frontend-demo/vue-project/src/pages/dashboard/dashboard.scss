@@ -1,0 +1,111 @@
+/* 页面样式在页面组件外单独维护，避免 SFC 超过 300 行 */
+
+.dashboard-kpi {
+    position: relative;
+    height: 100%;
+    min-height: 72px;
+    padding: 12px 12px 12px 16px;
+    overflow: hidden;
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 12px;
+        bottom: 12px;
+        left: 0;
+        width: 2px;
+        border-radius: 999px;
+        background: var(--admin-primary);
+    }
+
+    &[data-accent='1']::before {
+        background: var(--admin-accent-2);
+    }
+
+    &[data-accent='2']::before {
+        background: var(--admin-accent-3);
+    }
+
+    &[data-accent='3']::before {
+        background: var(--admin-accent-4);
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--admin-muted);
+        font-size: 12px;
+    }
+
+    &__value-row {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+    }
+
+    &__value {
+        color: var(--admin-ink);
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+    }
+
+    &__suffix {
+        color: var(--admin-muted);
+        font-size: 12px;
+    }
+}
+
+.dashboard-store {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow);
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__copy {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+    }
+
+    &__label {
+        color: var(--admin-ink);
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    &__hint {
+        color: var(--admin-muted);
+        font-size: 12px;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__value {
+        min-width: 32px;
+        color: var(--admin-ink);
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+    }
+}

@@ -1,0 +1,23 @@
+.chart-card {
+    height: 100%;
+    border: 1px solid var(--admin-border) !important;
+    box-shadow: var(--admin-shadow) !important;
+    background: var(--admin-surface) !important;
+
+    .ant-card-head {
+        min-height: 40px;
+        padding-block: 0;
+        border-bottom-color: var(--admin-border);
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--admin-ink);
+    }
+
+    .ant-card-body {
+        padding: 8px 12px 4px;
+    }
+
+    &__canvas {
+        width: 100%;
+    }
+}

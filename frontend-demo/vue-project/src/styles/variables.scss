@@ -1,0 +1,49 @@
+:root {
+    /* 布局尺寸 */
+    --admin-header-height: 48px;
+    --admin-sider-width: 208px;
+    --admin-sider-collapsed-width: 64px;
+    --admin-content-padding: 12px;
+
+    /* 色彩 */
+    --admin-bg: #f7f5f2;
+    --admin-surface: #fffcfb;
+    --admin-header-bg: rgba(255, 252, 251, 0.82);
+    --admin-sider-bg: #17151f;
+    --admin-primary: #7e72f6;
+    --admin-primary-hover: #6b5fe8;
+    --admin-primary-soft: rgba(126, 114, 246, 0.12);
+    --admin-primary-softer: rgba(126, 114, 246, 0.06);
+    --admin-border: #e8e4de;
+    --admin-ink: #1c1917;
+    --admin-muted: #78716c;
+
+    /* 侧边栏（深色底）派生色 */
+    --admin-inverse: #fff;
+    --admin-sider-divider: rgba(255, 255, 255, 0.06);
+    --admin-sider-text: rgba(255, 255, 255, 0.72);
+    --admin-sider-muted: rgba(255, 255, 255, 0.42);
+    --admin-primary-shadow: rgba(126, 114, 246, 0.22);
+
+    /* 图表 / 强调色 */
+    --admin-accent-2: #a89bff;
+    --admin-accent-3: #c4b5a0;
+    --admin-accent-4: #78716c;
+    --admin-table-header-bg: #f3f0ea;
+    --admin-table-row-hover: rgba(126, 114, 246, 0.06);
+
+    /* 圆角 / 阴影 */
+    --admin-radius: 10px;
+    --admin-radius-sm: 6px;
+    --admin-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+
+    /* 层级 */
+    --admin-z-header: 10;
+    --admin-z-sider: 100;
+
+    /* 断点，与 Ant Design Vue Grid 对齐 */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+}

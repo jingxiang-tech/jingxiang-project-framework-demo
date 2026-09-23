@@ -1,0 +1,93 @@
+// 全局样式：在 App.vue 的 <style> 中引入一次，不加 scoped。
+@import './variable.scss';
+@import './mixins.scss';
+
+page {
+    background-color: $background-color;
+    color: $text-color-main;
+    font-size: $font-size-base;
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+}
+
+// ---- flex 布局快捷类 ----
+// fh = flex horizontal, fv = flex vertical
+// 后缀：c = center, b = baseline, bt = space-between, ar = space-around
+.fh-c {
+    display: flex;
+    align-items: center;
+}
+
+.fh-c-bt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fh-c-ar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.fh-b {
+    display: flex;
+    align-items: baseline;
+}
+
+.fv-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fv-c-bt {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.flex-1 {
+    flex: 1;
+    min-width: 0;
+}
+
+// ---- 文本溢出 ----
+.text-overflow {
+    @include ellipsis(1);
+}
+
+.text-overflow-2 {
+    @include ellipsis(2);
+}
+
+.text-overflow-3 {
+    @include ellipsis(3);
+}
+
+// ---- 通用卡片容器 ----
+.panel {
+    margin: $spacing-md;
+    padding: $spacing-md;
+    border-radius: $radius-lg;
+    background-color: #ffffff;
+}
+
+// ---- 列表底部加载态 ----
+.list-tip {
+    padding: $spacing-lg 0;
+    text-align: center;
+    font-size: $font-size-xs;
+    color: $text-color-placeholder;
+}
+
+// ---- 空状态 ----
+.empty {
+    padding: 160rpx 0;
+    text-align: center;
+
+    &__text {
+        margin-top: $spacing-md;
+        font-size: $font-size-sm;
+        color: $text-color-secondary;
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "name": "weapp-project",
+    "version": "0.1.0",
+    "private": true,
+    "description": "uni-app 3 + Vue 3 + TypeScript 小程序规范示例项目",
+    "scripts": {
+        "dev:mp-weixin": "uni -p mp-weixin",
+        "dev:mp-toutiao": "uni -p mp-toutiao",
+        "build:mp-weixin": "uni build -p mp-weixin",
+        "build:mp-toutiao": "uni build -p mp-toutiao",
+        "type-check": "vue-tsc --noEmit",
+        "lint": "eslint . --fix",
+        "lint:check": "eslint .",
+        "format": "prettier --write ."
+    },
+    "dependencies": {
+        "@dcloudio/uni-app": "3.0.0-5020620260917001",
+        "@dcloudio/uni-components": "3.0.0-5020620260917001",
+        "@dcloudio/uni-mp-toutiao": "3.0.0-5020620260917001",
+        "@dcloudio/uni-mp-weixin": "3.0.0-5020620260917001",
+        "@dcloudio/uni-ui": "1.5.12",
+        "dayjs": "1.11.23",
+        "pinia": "2.3.1",
+        "vue": "3.4.21"
+    },
+    "devDependencies": {
+        "@dcloudio/types": "3.4.32",
+        "@dcloudio/uni-cli-shared": "3.0.0-5020620260917001",
+        "@dcloudio/vite-plugin-uni": "3.0.0-5020620260917001",
+        "@types/node": "22.10.2",
+        "@vue/eslint-config-prettier": "10.2.0",
+        "eslint": "9.39.5",
+        "eslint-plugin-vue": "10.11.0",
+        "prettier": "3.9.9",
+        "sass": "1.77.8",
+        "typescript": "5.9.3",
+        "typescript-eslint": "8.70.1",
+        "vite": "5.2.8",
+        "vue-tsc": "2.2.12"
+    }
+}

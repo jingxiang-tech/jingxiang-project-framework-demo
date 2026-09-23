@@ -1,0 +1,57 @@
+// 设计 token：通过 vite.config.ts 的 css.preprocessorOptions.additionalData 全局注入，
+// 组件内直接使用变量，无需手动 @import。
+
+// ---- 品牌色 ----
+$primary-color: #ffbd00;
+$primary-color-dark: #ffb400;
+$background-color: #fff4d7;
+$btn-color: linear-gradient(135deg, #ffd34d, #ffb400);
+
+// ---- 文字色 ----
+$text-color-main: #1c1917;
+$text-color-regular: #44403c;
+$text-color-secondary: #78716c;
+$text-color-placeholder: #a8a29e;
+$text-color-inverse: #ffffff;
+
+// ---- 功能色 ----
+$color-success: #16a34a;
+$color-warning: #f59e0b;
+$color-danger: #dc2626;
+
+// ---- 边框 / 分割线 ----
+$border-color: #e8e4de;
+$border-color-light: #f2efe9;
+
+// ---- 间距（rpx，8 的倍数）----
+$spacing-xs: 8rpx;
+$spacing-sm: 16rpx;
+$spacing-md: 24rpx;
+$spacing-lg: 32rpx;
+$spacing-xl: 48rpx;
+
+// ---- 字号（rpx，最小不得低于 24rpx）----
+$font-size-xs: 24rpx;
+$font-size-sm: 26rpx;
+$font-size-base: 28rpx;
+$font-size-md: 30rpx;
+$font-size-lg: 34rpx;
+$font-size-xl: 40rpx;
+
+// ---- 圆角 ----
+$radius-sm: 8rpx;
+$radius-base: 16rpx;
+$radius-lg: 24rpx;
+$radius-round: 999rpx;
+
+// ---- 层级 ----
+$z-index-popup: 900;
+$z-index-toast: 1000;
+
+// ---- 触控 / 列表最小高度 ----
+$touch-target-min: 88rpx;
+
+// 远程图片统一走 OSS CDN，本地 static/ 只放 tabbar 图标与 iconfont
+@function bg($name) {
+    @return url('https://oss-xingdou.aixingdou.com/weapp/#{$name}');
+}
