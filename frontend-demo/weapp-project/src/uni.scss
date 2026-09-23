@@ -1,0 +1,57 @@
+// uni-app 会自动把本文件注入到每个组件的样式中。
+// 项目自有设计 token 放在 styles/variable.scss（由 vite additionalData 注入），
+// 这里只保留 uni-ui 组件库依赖的 $uni-* 变量。
+
+/* 主题颜色 */
+$uni-color-primary: #ffbd00;
+$uni-color-success: #16a34a;
+$uni-color-warning: #f59e0b;
+$uni-color-error: #dc2626;
+
+/* 文字基本颜色 */
+$uni-text-color: #1c1917;
+$uni-text-color-inverse: #ffffff;
+$uni-text-color-grey: #78716c;
+$uni-text-color-placeholder: #a8a29e;
+$uni-text-color-disable: #d6d3d1;
+
+/* 背景颜色 */
+$uni-bg-color: #ffffff;
+$uni-bg-color-grey: #fff4d7;
+$uni-bg-color-hover: #f5f5f4;
+$uni-bg-color-mask: rgba(0, 0, 0, 0.4);
+
+/* 边框颜色 */
+$uni-border-color: #e8e4de;
+
+/* 尺寸变量 */
+$uni-font-size-sm: 12px;
+$uni-font-size-base: 14px;
+$uni-font-size-lg: 16px;
+
+$uni-img-size-sm: 20px;
+$uni-img-size-base: 26px;
+$uni-img-size-lg: 40px;
+
+$uni-border-radius-sm: 4px;
+$uni-border-radius-base: 8px;
+$uni-border-radius-lg: 12px;
+$uni-border-radius-circle: 50%;
+
+$uni-spacing-row-sm: 5px;
+$uni-spacing-row-base: 10px;
+$uni-spacing-row-lg: 15px;
+
+$uni-spacing-col-sm: 4px;
+$uni-spacing-col-base: 8px;
+$uni-spacing-col-lg: 12px;
+
+$uni-opacity-disabled: 0.3;
+
+/* 文章场景 */
+$uni-color-title: #1c1917;
+$uni-font-size-title: 20px;
+$uni-color-subtitle: #44403c;
+$uni-font-size-subtitle: 16px;
+$uni-color-paragraph: #78716c;
+$uni-font-size-paragraph: 14px;

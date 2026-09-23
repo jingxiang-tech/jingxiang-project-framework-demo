@@ -1,0 +1,118 @@
+{
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+        }
+    },
+    "pages": [
+        {
+            "path": "pages/dashboard/dashboard",
+            "style": {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": true,
+                "backgroundTextStyle": "dark"
+            }
+        },
+        {
+            "path": "pages/kol-list/kol-list",
+            "style": {
+                "navigationBarTitleText": "达人库",
+                "enablePullDownRefresh": true,
+                "backgroundTextStyle": "dark",
+                "onReachBottomDistance": 80
+            }
+        },
+        {
+            "path": "pages/mine/mine",
+            "style": {
+                "navigationBarTitleText": "我的"
+            }
+        }
+    ],
+    "subPackages": [
+        {
+            "root": "pages-common",
+            "pages": [
+                {
+                    "path": "kol-detail/kol-detail",
+                    "style": {
+                        "navigationBarTitleText": "达人详情",
+                        "onReachBottomDistance": 80
+                    }
+                }
+            ]
+        },
+        {
+            "root": "pages-authorize",
+            "pages": [
+                {
+                    "path": "login/login",
+                    "style": {
+                        "navigationBarTitleText": "登录"
+                    }
+                },
+                {
+                    "path": "user-info/user-info",
+                    "style": {
+                        "navigationBarTitleText": "个人资料"
+                    }
+                }
+            ]
+        },
+        {
+            "root": "pages-withdraw",
+            "pages": [
+                {
+                    "path": "withdraw/withdraw",
+                    "style": {
+                        "navigationBarTitleText": "申请提现"
+                    }
+                },
+                {
+                    "path": "withdraw-record/withdraw-record",
+                    "style": {
+                        "navigationBarTitleText": "提现记录",
+                        "onReachBottomDistance": 80
+                    }
+                }
+            ]
+        }
+    ],
+    "preloadRule": {
+        "pages/dashboard/dashboard": {
+            "network": "all",
+            "packages": ["pages-common"]
+        },
+        "pages/mine/mine": {
+            "network": "wifi",
+            "packages": ["pages-authorize", "pages-withdraw"]
+        }
+    },
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "达人精选",
+        "navigationBarBackgroundColor": "#FFFFFF",
+        "backgroundColor": "#FFF4D7"
+    },
+    "tabBar": {
+        "color": "#78716C",
+        "selectedColor": "#FFB400",
+        "backgroundColor": "#FFFFFF",
+        "borderStyle": "white",
+        "list": [
+            {
+                "pagePath": "pages/dashboard/dashboard",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/kol-list/kol-list",
+                "text": "达人库"
+            },
+            {
+                "pagePath": "pages/mine/mine",
+                "text": "我的"
+            }
+        ]
+    }
+}

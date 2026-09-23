@@ -1,0 +1,38 @@
+{
+    "name": "达人精选",
+    "appid": "",
+    "description": "uni-app 3 + Vue 3 + TypeScript 小程序规范示例项目",
+    "versionName": "1.0.0",
+    "versionCode": "100",
+    "transformPx": false,
+    "vueVersion": "3",
+    "mp-weixin": {
+        "appid": "",
+        "setting": {
+            "urlCheck": false,
+            "es6": true,
+            "enhance": true,
+            "minified": true,
+            "postcss": true
+        },
+        "usingComponents": true,
+        "lazyCodeLoading": "requiredComponents",
+        "optimization": {
+            "subPackages": true
+        },
+        "__usePrivacyCheck__": true
+    },
+    "mp-toutiao": {
+        "appid": "",
+        "setting": {
+            "urlCheck": false,
+            "es6": true,
+            "minified": true
+        },
+        "usingComponents": true,
+        "lazyCodeLoading": "requiredComponents",
+        "optimizeMainPackage": {
+            "enable": true
+        }
+    }
+}

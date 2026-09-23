@@ -1,0 +1,176 @@
+.admin-layout {
+    min-height: 100%;
+    background: var(--admin-bg);
+
+    &__sider {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+        background: var(--admin-sider-bg) !important;
+        border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
+
+        .ant-layout-sider-children {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    &__logo {
+        height: var(--admin-header-height);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 12px;
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+        &--collapsed {
+            justify-content: center;
+            padding: 0;
+        }
+    }
+
+    &__logo-mark {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        background: var(--admin-primary);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        box-shadow: 0 4px 10px rgba(126, 114, 246, 0.22);
+    }
+
+    &__logo-copy {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        line-height: 1.2;
+    }
+
+    &__logo-title {
+        color: #fff !important;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    &__logo-subtitle {
+        color: rgba(255, 255, 255, 0.42) !important;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    &__menu {
+        margin-top: 6px;
+        border-inline-end: none !important;
+        background: transparent !important;
+
+        .ant-menu-item {
+            width: calc(100% - 12px);
+        }
+
+        &.ant-menu-dark .ant-menu-item-selected {
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 6px;
+                bottom: 6px;
+                width: 2px;
+                border-radius: 2px;
+                background: var(--admin-primary);
+            }
+        }
+    }
+
+    &__main {
+        background: transparent;
+        min-width: 0;
+    }
+
+    &__header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--admin-header-height);
+        padding-inline: 8px;
+        line-height: normal;
+        background: rgba(255, 252, 251, 0.78) !important;
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--admin-border);
+    }
+
+    &__header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    &__trigger {
+        color: var(--admin-ink);
+    }
+
+    &__header-titles {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        line-height: 1.25;
+    }
+
+    &__header-title {
+        color: var(--admin-ink) !important;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    &__header-desc {
+        color: var(--admin-muted) !important;
+        font-size: 11px;
+    }
+
+    &__content {
+        margin: var(--admin-content-padding);
+        padding: var(--admin-content-padding);
+        min-height: calc(
+            100vh - var(--admin-header-height) - var(--admin-content-padding) * 2
+        );
+        background: var(--admin-surface);
+        border: 1px solid var(--admin-border);
+        border-radius: 10px;
+        box-shadow: var(--admin-shadow);
+    }
+
+    &__drawer {
+        .admin-layout__logo {
+            background: var(--admin-sider-bg);
+            margin-bottom: 4px;
+        }
+    }
+
+    &__drawer-menu {
+        .ant-menu {
+            border-inline-end: none;
+            background: transparent;
+
+            .ant-menu-item-selected {
+                background: var(--admin-primary-soft);
+                color: var(--admin-primary);
+            }
+        }
+    }
+}
