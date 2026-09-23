@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Validated
 @RestController
-@RequestMapping("student")
+@RequestMapping("student") // 接口使用业务名称单数形式
 @RequiredArgsConstructor
 public class StudentController {
 
@@ -37,12 +37,14 @@ public class StudentController {
     /** 列表 */
     @GetMapping
     public R<List<StudentBrief>> list(@Valid StudentQuery query) {
+        // 千万级数据量，或者 APP 端不关心数据总量情况，直接查询列表数据
         return studentService.list(query);
     }
 
     /** 分页 */
     @GetMapping("page")
     public R<Page<StudentBrief>> page(@Valid StudentQuery query) {
+        // 后台系统需要显示当前数据、总行数、当前页、分页等，使用 page 分页查询
         return studentService.page(query);
     }
 
@@ -54,19 +56,20 @@ public class StudentController {
 
     /** 创建 */
     @PostMapping
-    public R<StudentBrief> create(@Valid @RequestBody StudentCreate create) {
+    public R create(@Valid @RequestBody StudentCreate create) {
+        // 只返回成功或失败，不回传学生。需要数据时再查详情。
         return studentService.create(create);
     }
 
     /** 修改 */
     @PutMapping
-    public R<StudentBrief> update(@Valid @RequestBody StudentUpdate update) {
+    public R update(@Valid @RequestBody StudentUpdate update) {
         return studentService.update(update);
     }
 
     /** 删除 */
     @DeleteMapping("{id}")
-    public R<String> delete(@PathVariable("id") @Positive(message = "学生 ID 必须大于 0") Long id) {
+    public R delete(@PathVariable("id") @Positive(message = "学生 ID 必须大于 0") Long id) {
         return studentService.delete(id);
     }
 }

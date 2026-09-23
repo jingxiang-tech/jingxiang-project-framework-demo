@@ -43,6 +43,7 @@ web/{domain}/
 | 异常 | `Exception` 后缀 | `BizException` |
 | 布尔字段 | Java 侧不加 `is` 前缀 | `deleted` |
 
+- 是否、有无用 `com.jingxiang.commons.model.dict.Whether`：`Whether.No` 否，`Whether.Yes` 是。不要自定义 `NOT_DELETED = 0` 这类常量。
 - 4 个空格，禁止 Tab；行宽 120；K&R 大括号；if/for/while 必须有 `{}`。
 - 类、方法写 Javadoc；字段 `/** 中文说明 */`。
 - 禁止拼音、禁止接口名加 `I` 前缀、禁止魔法值；`long` 用 `1000L`。

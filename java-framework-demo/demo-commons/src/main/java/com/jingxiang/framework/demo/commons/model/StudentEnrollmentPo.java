@@ -39,7 +39,7 @@ public class StudentEnrollmentPo {
     /** 专业 */
     private String major;
 
-    /** 是否删除：0 否，1 是 */
+    /** 是否删除：Whether.No 否，Whether.Yes 是 */
     private Integer deleted;
 
     /** 创建时间 */

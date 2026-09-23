@@ -41,25 +41,28 @@ public interface StudentService {
 
     /**
      * 创建学生，并同时写入学籍和异动记录。
+     * 唯一约束冲突交给全局异常拦截，不在这里返回失败信息。
+     * 只表示写入成功，不回传学生数据。
      *
      * @param create 创建参数
-     * @return 创建后的学生；学号重复时失败
+     * @return 成功或失败，不含学生数据
      */
-    R<StudentBrief> create(StudentCreate create);
+    R create(StudentCreate create);
 
     /**
      * 修改学生，并同时更新学籍、覆盖异动记录。
+     * 只表示修改成功，不回传学生数据。
      *
      * @param update 修改参数
-     * @return 修改后的学生；不存在时失败
+     * @return 成功或失败，不含学生数据
      */
-    R<StudentBrief> update(StudentUpdate update);
+    R update(StudentUpdate update);
 
     /**
      * 逻辑删除学生，并同时逻辑删除学籍和异动记录。
      *
      * @param id 学生 ID
-     * @return 删除结果；不存在时失败
+     * @return 成功或失败，不含业务数据
      */
-    R<String> delete(Long id);
+    R delete(Long id);
 }

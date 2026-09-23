@@ -68,34 +68,4 @@ public interface StudentMapper extends BaseMapper<StudentPo> {
             """)
     StudentDetail detail(@Param("id") Long id);
 
-    /**
-     * 修改未删除的学生。学号不在此更新。
-     *
-     * @param student 待更新字段，必须带 id
-     * @return 影响行数
-     */
-    @Update("""
-            UPDATE student
-               SET student_name = #{studentName},
-                   student_status = #{studentStatus},
-                   updated_at = #{updatedAt}
-             WHERE deleted = 0
-               AND id = #{id}
-            """)
-    int updateActive(StudentPo student);
-
-    /**
-     * 逻辑删除学生。
-     *
-     * @param id 学生 ID
-     * @return 影响行数
-     */
-    @Update("""
-            UPDATE student
-               SET deleted = 1,
-                   updated_at = NOW()
-             WHERE deleted = 0
-               AND id = #{id}
-            """)
-    int logicDelete(@Param("id") Long id);
 }
