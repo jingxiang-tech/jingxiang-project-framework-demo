@@ -1,7 +1,9 @@
--- 学号全局唯一，是并发下的最终防线，不能只靠先查再插。
+-- 学号是创建的幂等键。唯一约束保证同一学号不会插入第二行，不能只靠先查再插。
+-- 重复提交会撞上 uk_student_no，由全局异常拦截返回失败。库里仍然只有这一名学生。
+-- 第二次请求里的姓名、状态即使不同，创建也不会覆盖；要改内容走修改接口。
 CREATE TABLE IF NOT EXISTS student (
     id BIGINT NOT NULL AUTO_INCREMENT COMMENT '学生 ID',
-    student_no VARCHAR(32) NOT NULL COMMENT '学号',
+    student_no VARCHAR(32) NOT NULL COMMENT '学号，创建幂等键',
     student_name VARCHAR(40) NOT NULL COMMENT '姓名',
     student_status VARCHAR(32) NOT NULL COMMENT '学生状态：ENROLLED 在读，SUSPENDED 休学，GRADUATED 毕业',
     deleted TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除：0 否，1 是',

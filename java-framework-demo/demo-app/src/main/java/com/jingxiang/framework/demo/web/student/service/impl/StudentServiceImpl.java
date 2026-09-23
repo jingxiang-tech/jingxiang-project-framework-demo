@@ -76,8 +76,9 @@ public class StudentServiceImpl implements StudentService {
 
     /**
      * 创建学生，并同时写入学籍和异动记录。
-     * 不在这里捕获唯一约束冲突。学号重复会抛出 DuplicateKeyException，
-     * 由 CommonExceptionResolver 统一转成失败响应，当前事务一并回滚。
+     * 幂等键是学号。先插入，不先查再插；同一学号撞上 uk_student_no 时插不进去，库里仍只有一行。
+     * 不在这里捕获冲突。DuplicateKeyException 交给 CommonExceptionResolver 返回失败。
+     * 第二次请求里的姓名、状态不同也不覆盖，创建幂等不是修改。
      * 创建只表示写入成功，不组装 Brief 返回；需要数据时再查详情。
      *
      * @param create 创建参数
@@ -92,6 +93,7 @@ public class StudentServiceImpl implements StudentService {
         student.setDeleted(Whether.No);
         student.setCreatedAt(now);
         student.setUpdatedAt(now);
+        // 幂等靠学号唯一约束。重复提交插不进第二行，异常交给全局拦截，这里不先查再插。
         studentMapper.insert(student);
         return R.ok();
     }

@@ -58,6 +58,7 @@ public class StudentController {
     @PostMapping
     public R create(@Valid @RequestBody StudentCreate create) {
         // 只返回成功或失败，不回传学生。需要数据时再查详情。
+        // 幂等键是学号。同一学号再提交不会插入第二行，冲突由全局异常拦截返回失败。
         return studentService.create(create);
     }
 
