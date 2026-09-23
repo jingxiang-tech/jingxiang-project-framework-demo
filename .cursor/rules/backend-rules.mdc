@@ -1,0 +1,147 @@
+---
+description: 通用 Java 后端规范：Spring MVC、MyBatis Plus、REST、模型命名、SQL、JWT、异常与日志。编辑 Java、Maven、yml 时启用。
+globs: "{**/*.java,**/pom.xml,**/application*.yml,**/application*.yaml}"
+alwaysApply: false
+---
+
+你是 Java 后端开发助手。遵循**阿里巴巴 Java 开发手册**与当前仓库既有约定。先看清模块与包结构，再改代码；禁止把另一套技术栈（XML Mapper、Swagger、javax 校验等）引进来。
+
+## 1. 技术栈基线
+
+- Java 25、Spring Boot 4、Spring MVC、jakarta.validation（与 jingxiang-project 一致）
+- MyBatis Plus、MySQL 8、Maven（单模块或多模块均可）
+- Lombok、Fastjson2；Spring MVC 序列化用 Jackson 2（Spring Boot 4 引入 `spring-boot-jackson2`，并设置 `preferred-json-mapper: jackson2`，`@DictSerialize` 才能生效）
+- 依赖 `jingxiang-commons`、`jingxiang-component-dict`。返回体用 `com.jingxiang.commons.model.dto.R`，分页用 `Page` + `BasePage` / `BaseQuery` + `PageUtil`，枚举展示用 `@DictSerialize`。禁止自造响应体、分页工具或字典序列化
+- 认证：JWT；当前用户通过 `SessionUtil`（或项目等价工具）获取
+- 服务 `context-path` 以配置为准，一般为 `/api`。客户端 `demo-app` 默认端口 `8000`，管理端 `demo-ms` 默认端口 `9000`
+- **禁止** Swagger / OpenAPI 注解
+
+## 2. 分层
+
+```text
+web/{domain}/
+├── controller/     # 只接收参数并转发
+├── service/        # 接口
+│   └── impl/       # @Service 实现
+├── dao/            # *Mapper，包名必须是 dao，不是 mapper
+└── model/          # Query / Create / Update / Brief / Detail / Po
+```
+
+- Controller 禁止直接调用 Mapper。
+- 多模块时：共享 Po、枚举、外部客户端放 commons，禁止只在一端复制一份。
+- 多数据源时：Mapper 包必须绑对应 `SqlSessionFactory`，禁止跨库乱扫。
+
+## 3. 命名与格式
+
+| 类型 | 规则 | 示例 |
+| --- | --- | --- |
+| 类 / 接口 | UpperCamelCase | `StudentService` |
+| 方法 / 变量 | lowerCamelCase | `studentMapper` |
+| 常量 | 全大写下划线 | `MAX_PAGE_SIZE` |
+| 包名 | 全小写 | `…web.student.dao` |
+| 实现类 | `ServiceImpl` 后缀 | `StudentServiceImpl` |
+| 异常 | `Exception` 后缀 | `BizException` |
+| 布尔字段 | Java 侧不加 `is` 前缀 | `deleted` |
+
+- 4 个空格，禁止 Tab；行宽 120；K&R 大括号；if/for/while 必须有 `{}`。
+- 类、方法写 Javadoc；字段 `/** 中文说明 */`。
+- 禁止拼音、禁止接口名加 `I` 前缀、禁止魔法值；`long` 用 `1000L`。
+
+## 4. 依赖注入与 Java 25
+
+- 优先 `@RequiredArgsConstructor` + `private final` 构造器注入，避免 `@Autowired` 字段注入。
+- 覆写必须 `@Override`；字符串比较常量在左。
+- **可用 record：** AI 结构化输出、不可变 DTO、不走 MyBatis / `BeanUtils.copyProperties` 的类。
+- **禁止 record：** Po、Query、Brief/Detail、需要 `@Builder` 或 copyProperties 的类。
+
+## 5. REST
+
+- `@RestController`；`@RequestMapping` 用 kebab-case 资源名。
+- GET 查询、POST 新增、PUT 修改、DELETE 删除。
+- 成功 `status === 200`；业务失败 `R.fail("错误信息")`，不要用 HTTP 4xx/5xx 表达业务错误。
+
+| 操作 | 方法 | 路径 | 参数 |
+| --- | --- | --- | --- |
+| 分页列表 | GET | `/student` | Query 继承 `BasePage` / `BaseQuery` |
+| 详情 | GET | `/student/{id}` | `@PathVariable` |
+| 新增 | POST | `/student` | `@RequestBody @Valid` Create |
+| 修改 | PUT | `/student` | `@RequestBody @Valid` Update |
+| 删除 | DELETE | `/student/{id}` | `@PathVariable` |
+
+- 管理端分页常用 `R<Page<T>>` + `PageUtil.startPage(query)`；C 端列表可用 `List` + `BaseQuery`（以当前模块为准）。
+- `pageNum` / `pageSize` 含义与现有接口保持一致（本体系常见 `pageNum` 从 0 起，`PageUtil` 把 0 当作第一页）。
+- 校验用 jakarta，禁止 `javax.*`。对外 JSON 用 camelCase。
+
+## 6. 模型
+
+```text
+Create / Update / Query  →  @Getter @Setter
+Brief / Detail           →  @Getter @Setter，枚举加 @DictSerialize
+Po                       →  @Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
+```
+
+- JSON 列：`@TableField(typeHandler = JsonObjectTypeHandler.class)`（用项目里已有 Handler）。
+- 枚举常量全大写，带 `name` 字段：
+
+```java
+public enum OrderStatusEnum {
+    PENDING("待处理"),
+    DONE("已完成");
+
+    public final String name;
+
+    OrderStatusEnum(String name) {
+        this.name = name;
+    }
+}
+```
+
+## 7. Service / 事务 / 鉴权
+
+- 写操作：`@Transactional(rollbackFor = Exception.class)`。
+- 记录不存在：`return R.fail("xxx不存在")`；需要中断再抛业务异常。
+- 登录态：`SessionUtil.getUserId()` 等；查询必须带租户或用户隔离条件（`mctNo` / `spaceId` / `userId` 以表结构为准），禁止越权。无登录的教学接口也要在服务端写入隔离条件，不能信任客户端传入的商户号。
+- 跨库操作不要用一个 `@Transactional` 硬包两套数据源。
+
+## 8. SQL
+
+- 注解 SQL + 文本块，不生成 XML；关键字大写；每字段一行。
+- 禁止 `SELECT *`；禁止列 AS 别名下划线转驼峰。
+- 动态条件用 `<script>` + `<if>`；模糊 `CONCAT('%', #{param}, '%')`。
+- 只用 `#{}`，禁止 `${}`；禁止循环查库。
+- 分页交给 PageHelper / 现有 `PageUtil`，Mapper 不写 LIMIT。
+- 列表/详情返回 Brief / Detail，不把 Po 直接给前端。
+- 禁止使用 `@Results`映射，字段的配置直接在关联实体上标记注解
+
+```java
+@Select("""
+        SELECT id,
+               student_name,
+               created_at
+          FROM student
+         WHERE deleted = 0
+           AND id = #{id}
+        """)
+StudentDetail detail(@Param("id") Long id);
+```
+
+## 9. 异常、日志、JSON
+
+- 使用 jingxiang-commons 的 `CommonExceptionResolver` 处理未登录与通用异常；业务错误优先 `R.fail`。不要再写一套把业务失败映射成 HTTP 4xx 的异常处理器。
+- 禁止空 catch、禁止 `System.out` / `printStackTrace`。
+- SLF4J 占位符：`log.info("查询学生, id={}", id)`；`log.error("失败", e)` 必须带堆栈。
+- 禁止打印密钥、Token、密码、完整手机号。
+- 业务解析用 Fastjson2；TypeHandler 与 MVC 用 Jackson；同一条链路不要混用。
+- 远程调用必须设超时，失败要明确失败信息或受控降级。
+
+## 10. 自检
+
+1. Controller 是否够薄？是否构造器注入 + `@Valid`？
+2. 返回是否 `R` / `R<Page<T>>`，失败是否 `R.fail`？
+3. SQL 是否无 `*`、无 `${}`、无循环查库？
+4. 是否带租户/用户条件？共享代码是否放对模块？
+5. 是否最小 diff，无敏感日志？
+
+## 优先级
+
+**用户明确要求 > 本文件 > 当前文件既有风格**

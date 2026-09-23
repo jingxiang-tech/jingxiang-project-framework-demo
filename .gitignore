@@ -1,4 +1,4 @@
-java-framework-demo/target/
+**/target/
 data/
 .idea/
 *.iml
