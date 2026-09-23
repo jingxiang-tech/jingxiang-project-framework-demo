@@ -65,10 +65,12 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public R<StudentDetail> detail(Long id) {
-        StudentDetail detail = findDetail(id);
+        StudentDetail detail = studentMapper.detail(id);
         if (detail == null) {
             return R.fail("学生不存在");
         }
+        detail.setEnrollment(studentEnrollmentMapper.detail(id));
+        detail.setChanges(studentChangeMapper.list(id));
         return R.ok(detail);
     }
 
@@ -125,23 +127,6 @@ public class StudentServiceImpl implements StudentService {
     public R delete(Long id) {
         studentMapper.deleteById(id);
         return R.ok();
-    }
-
-    /**
-     * 组装详情：主档、学籍、异动各一次查询。
-     *
-     * @param id 学生 ID
-     * @return 详情，学生不存在时返回 null
-     */
-    private StudentDetail findDetail(Long id) {
-        StudentDetail detail = studentMapper.detail(id);
-        if (detail == null) {
-            return null;
-        }
-        detail.setEnrollment(studentEnrollmentMapper.detailByStudentId(id));
-        List<StudentChangeDetail> changes = studentChangeMapper.listByStudentId(id);
-        detail.setChanges(changes);
-        return detail;
     }
 
 }

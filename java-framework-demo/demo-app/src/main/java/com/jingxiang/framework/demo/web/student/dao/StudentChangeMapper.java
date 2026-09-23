@@ -32,7 +32,7 @@ public interface StudentChangeMapper {
                AND student_id = #{studentId}
              ORDER BY changed_on DESC, id DESC
             """)
-    List<StudentChangeDetail> listByStudentId(@Param("studentId") Long studentId);
+    List<StudentChangeDetail> list(@Param("studentId") Long studentId);
 
     /**
      * 批量写入异动。调用方保证列表非空。
@@ -79,5 +79,5 @@ public interface StudentChangeMapper {
              WHERE deleted = 0
                AND student_id = #{studentId}
             """)
-    int logicDeleteByStudentId(@Param("studentId") Long studentId);
+    int delete(@Param("studentId") Long studentId);
 }

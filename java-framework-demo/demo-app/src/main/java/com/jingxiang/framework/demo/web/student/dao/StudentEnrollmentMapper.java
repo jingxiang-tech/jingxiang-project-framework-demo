@@ -27,6 +27,6 @@ public interface StudentEnrollmentMapper extends BaseMapper<StudentEnrollmentPo>
              WHERE deleted = 0
                AND student_id = #{studentId}
             """)
-    StudentEnrollmentDetail detailByStudentId(@Param("studentId") Long studentId);
+    StudentEnrollmentDetail detail(@Param("studentId") Long studentId);
 
 }

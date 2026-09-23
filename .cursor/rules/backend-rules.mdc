@@ -43,6 +43,8 @@ web/{domain}/
 | 异常 | `Exception` 后缀 | `BizException` |
 | 布尔字段 | Java 侧不加 `is` 前缀 | `deleted` |
 
+- 常用业务方法用 `list`、`page`、`detail`、`create`、`update`、`delete`。不要加 `find`、`query`、`get` 前缀，也不要写成 `findDetail`、`detailByStudentId`。对象已经在类名上，方法名不再重复。
+
 - 是否、有无用 `com.jingxiang.commons.model.dict.Whether`：`Whether.No` 否，`Whether.Yes` 是。不要自定义 `NOT_DELETED = 0` 这类常量。
 - 4 个空格，禁止 Tab；行宽 120；K&R 大括号；if/for/while 必须有 `{}`。
 - 类、方法写 Javadoc；字段 `/** 中文说明 */`。
