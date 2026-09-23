@@ -47,7 +47,7 @@ public enum StudentStatusEnum {
 
 `SUSPENDED` 对应的 `studentStatusName` 是 `休学`，`GRADUATED` 对应 `毕业`。
 
-学生列表 `GET http://127.0.0.1:8000/api/student` 和详情 `GET http://127.0.0.1:8000/api/student/{id}` 都是这个写法，字段定义在 `StudentBrief`、`StudentDetail`。
+学生列表 `GET http://127.0.0.1:8000/api/student`、分页 `GET http://127.0.0.1:8000/api/student/page` 和详情 `GET http://127.0.0.1:8000/api/student/{id}` 都是这个写法，字段定义在 `StudentBrief`、`StudentDetail`。
 
 异动记录上的 `changeType` 同样处理，多返回 `changeTypeName`，例如 `TRANSFER` 对应 `转班`。字段定义在 `StudentChangeDetail`。
 

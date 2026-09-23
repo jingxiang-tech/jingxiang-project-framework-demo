@@ -1,5 +1,6 @@
 package com.jingxiang.framework.demo.web.student.service.impl;
 
+import com.jingxiang.commons.model.dict.Whether;
 import com.jingxiang.commons.model.dto.Page;
 import com.jingxiang.commons.model.dto.R;
 import com.jingxiang.commons.util.PageUtil;
@@ -38,9 +39,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    /** 未删除 */
-    private static final int NOT_DELETED = 0;
-
     /** 学号唯一约束名 */
     private static final String STUDENT_NO_UNIQUE_KEY = "uk_student_no";
 
@@ -51,14 +49,24 @@ public class StudentServiceImpl implements StudentService {
     private final StudentChangeMapper studentChangeMapper;
 
     /**
+     * 查询学生列表，不分页。
+     *
+     * @param query 筛选条件
+     * @return 列表
+     */
+    @Override
+    public R<List<StudentBrief>> list(StudentQuery query) {
+        return R.ok(studentMapper.list(query));
+    }
+
+    /**
      * 分页查询学生。
      *
      * @param query 分页与筛选条件
      * @return 分页列表
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public R<Page<StudentBrief>> list(StudentQuery query) {
+    public R<Page<StudentBrief>> page(StudentQuery query) {
         PageUtil.startPage(query);
         List<StudentBrief> list = studentMapper.list(query);
         return R.page(list);
@@ -91,7 +99,7 @@ public class StudentServiceImpl implements StudentService {
         LocalDateTime now = LocalDateTime.now();
         StudentPo student = new StudentPo();
         BeanUtils.copyProperties(create, student);
-        student.setDeleted(NOT_DELETED);
+        student.setDeleted(Whether.No);
         student.setCreatedAt(now);
         student.setUpdatedAt(now);
         try {

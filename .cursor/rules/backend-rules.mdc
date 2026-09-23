@@ -62,13 +62,16 @@ web/{domain}/
 
 | 操作 | 方法 | 路径 | 参数 |
 | --- | --- | --- | --- |
-| 分页列表 | GET | `/student` | Query 继承 `BasePage` / `BaseQuery` |
+| 列表 | GET | `/student` | Query，返回 `R<List<T>>`，不调用 `PageUtil.startPage` |
+| 分页 | GET | `/student/page` | Query 继承 `BasePage`，返回 `R<Page<T>>` |
 | 详情 | GET | `/student/{id}` | `@PathVariable` |
 | 新增 | POST | `/student` | `@RequestBody @Valid` Create |
 | 修改 | PUT | `/student` | `@RequestBody @Valid` Update |
 | 删除 | DELETE | `/student/{id}` | `@PathVariable` |
 
-- 管理端分页常用 `R<Page<T>>` + `PageUtil.startPage(query)`；C 端列表可用 `List` + `BaseQuery`（以当前模块为准）。
+- 分页：结果会持续变多，或给表格翻页。`PageUtil.startPage(query)` 后查询，返回 `R<Page<T>>`。
+- 不分页：数量有上限，调用方要一次拿全，如下拉选项、某个主体下的少量附属记录。直接返回 `R<List<T>>`，不要 `startPage`。
+- 会无限增长的表不要做不分页列表。学生模块两个接口都有，只为对照写法。
 - `pageNum` / `pageSize` 含义与现有接口保持一致（本体系常见 `pageNum` 从 0 起，`PageUtil` 把 0 当作第一页）。
 - 校验用 jakarta，禁止 `javax.*`。对外 JSON 用 camelCase。
 

@@ -8,10 +8,20 @@ import com.jingxiang.framework.demo.web.student.model.StudentDetail;
 import com.jingxiang.framework.demo.web.student.model.StudentQuery;
 import com.jingxiang.framework.demo.web.student.model.StudentUpdate;
 
+import java.util.List;
+
 /**
  * 学生用例。返回 {@link R}，不依赖 Servlet。
  */
 public interface StudentService {
+
+    /**
+     * 查询学生列表，不分页。
+     *
+     * @param query 筛选条件
+     * @return 列表
+     */
+    R<List<StudentBrief>> list(StudentQuery query);
 
     /**
      * 分页查询学生。
@@ -19,7 +29,7 @@ public interface StudentService {
      * @param query 分页与筛选条件
      * @return 分页列表
      */
-    R<Page<StudentBrief>> list(StudentQuery query);
+    R<Page<StudentBrief>> page(StudentQuery query);
 
     /**
      * 查询学生详情。
