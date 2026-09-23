@@ -108,12 +108,28 @@ public enum OrderStatusEnum {
 - 注解 SQL + 文本块，不生成 XML；关键字大写；每字段一行。
 - 禁止 `SELECT *`；禁止列 AS 别名下划线转驼峰。
 - 动态条件用 `<script>` + `<if>`；模糊 `CONCAT('%', #{param}, '%')`。
+- 只有一个对象参数时不加 `@Param`。`<if>` 和 `#{}` 直接写属性名，不要 `query.` 这类前缀。多个参数时才用 `@Param`。
 - 只用 `#{}`，禁止 `${}`；禁止循环查库。
 - 分页交给 PageHelper / 现有 `PageUtil`，Mapper 不写 LIMIT。
 - 列表/详情返回 Brief / Detail，不把 Po 直接给前端。
 - 禁止使用 `@Results`映射，字段的配置直接在关联实体上标记注解
 
 ```java
+@Select("""
+        <script>
+        SELECT id,
+               student_name,
+               created_at
+          FROM student
+         WHERE deleted = 0
+           <if test="studentName != null and studentName != ''">
+           AND student_name LIKE CONCAT('%', #{studentName}, '%')
+           </if>
+         ORDER BY id DESC
+        </script>
+        """)
+List<StudentBrief> list(StudentQuery query);
+
 @Select("""
         SELECT id,
                student_name,

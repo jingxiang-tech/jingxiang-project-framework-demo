@@ -38,16 +38,16 @@ public interface StudentMapper extends BaseMapper<StudentPo> {
                    created_at
               FROM student
              WHERE deleted = 0
-               <if test="query.studentName != null and query.studentName != ''">
-               AND student_name LIKE CONCAT('%', #{query.studentName}, '%')
+               <if test="studentName != null and studentName != ''">
+               AND student_name LIKE CONCAT('%', #{studentName}, '%')
                </if>
-               <if test="query.studentStatus != null">
-               AND student_status = #{query.studentStatus}
+               <if test="studentStatus != null">
+               AND student_status = #{studentStatus}
                </if>
              ORDER BY id DESC
             </script>
             """)
-    List<StudentBrief> list(@Param("query") StudentQuery query);
+    List<StudentBrief> list(StudentQuery query);
 
     /**
      * 查询学生主档。学籍和异动由服务再查一次后组装。
