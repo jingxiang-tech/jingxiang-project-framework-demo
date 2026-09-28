@@ -2,7 +2,7 @@ package com.jingxiang.framework.demo.web.student.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jingxiang.framework.demo.commons.model.StudentEnrollmentPo;
-import com.jingxiang.framework.demo.web.student.model.StudentEnrollmentDetail;
+import com.jingxiang.framework.demo.web.student.model.enrollment.StudentEnrollmentDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

@@ -1,4 +1,4 @@
-package com.jingxiang.framework.demo.web.student.model;
+package com.jingxiang.framework.demo.web.student.model.change;
 
 import com.jingxiang.framework.demo.commons.dict.StudentChangeTypeEnum;
 import jakarta.validation.constraints.NotBlank;

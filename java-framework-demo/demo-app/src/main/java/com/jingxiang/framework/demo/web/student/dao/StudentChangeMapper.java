@@ -1,7 +1,8 @@
 package com.jingxiang.framework.demo.web.student.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jingxiang.framework.demo.commons.model.StudentChangePo;
-import com.jingxiang.framework.demo.web.student.model.StudentChangeDetail;
+import com.jingxiang.framework.demo.web.student.model.change.StudentChangeDetail;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +15,7 @@ import java.util.List;
  * 学籍异动存取。一个学生多条。
  */
 @Mapper
-public interface StudentChangeMapper {
+public interface StudentChangeMapper extends BaseMapper<StudentChangePo> {
 
     /**
      * 按学生查询异动，日期倒序。
@@ -80,4 +81,5 @@ public interface StudentChangeMapper {
                AND student_id = #{studentId}
             """)
     int delete(@Param("studentId") Long studentId);
+
 }

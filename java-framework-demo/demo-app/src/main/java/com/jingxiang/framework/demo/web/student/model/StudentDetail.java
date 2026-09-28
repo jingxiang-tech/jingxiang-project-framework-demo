@@ -2,6 +2,8 @@ package com.jingxiang.framework.demo.web.student.model;
 
 import com.jingxiang.component.common.dict.convert.DictSerialize;
 import com.jingxiang.framework.demo.commons.dict.StudentStatusEnum;
+import com.jingxiang.framework.demo.web.student.model.change.StudentChangeDetail;
+import com.jingxiang.framework.demo.web.student.model.enrollment.StudentEnrollmentDetail;
 import lombok.Getter;
 import lombok.Setter;
 
