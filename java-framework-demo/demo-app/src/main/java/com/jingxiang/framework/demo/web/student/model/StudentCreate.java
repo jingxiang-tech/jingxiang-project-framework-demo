@@ -1,6 +1,8 @@
 package com.jingxiang.framework.demo.web.student.model;
 
 import com.jingxiang.framework.demo.commons.dict.StudentStatusEnum;
+import com.jingxiang.framework.demo.web.student.model.change.StudentChangeCreate;
+import com.jingxiang.framework.demo.web.student.model.enrollment.StudentEnrollmentCreate;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

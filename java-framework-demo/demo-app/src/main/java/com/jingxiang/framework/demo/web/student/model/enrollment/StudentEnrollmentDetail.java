@@ -1,4 +1,4 @@
-package com.jingxiang.framework.demo.web.student.model;
+package com.jingxiang.framework.demo.web.student.model.enrollment;
 
 import lombok.Getter;
 import lombok.Setter;
