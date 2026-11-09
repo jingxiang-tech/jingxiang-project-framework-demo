@@ -30,11 +30,7 @@ public interface StudentMapper extends BaseMapper<StudentPo> {
             SELECT id,
                    student_no,
                    student_name,
-                   student_status,
-                   (SELECT COUNT(*)
-                      FROM student_change
-                     WHERE student_change.deleted = 0
-                       AND student_change.student_id = student.id) AS change_count,
+                   student_status
                    created_at
               FROM student
              WHERE deleted = 0
