@@ -46,6 +46,8 @@ async function loadList() {
 
 ## 3. UI 与样式
 
+万域 `assistsx-wyyq` 与 `assistsx-plugin-wyyq` 的 UI 设计要求统一见 [UI设计规范.md](../../UI设计规范.md)。下面的通用 UI 条目及技术栈示例不为这两个项目另立配色、字体或组件选型；其余代码与接口约定继续适用。
+
 - 只用项目已有组件库（Ant Design / Element Plus 等），禁止再引入另一套。
 - 表单走组件库 Form + 校验规则；二次确认用 `Modal.confirm` / `$confirm`。
 - 轻提示：`message.success/error` 或项目已有 toast；不要 `alert`。
